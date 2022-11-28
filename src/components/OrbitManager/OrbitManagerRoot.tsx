@@ -11,7 +11,9 @@ export function OrbitManagerRoot(props: IProps) {
     >
       <div> hi</div>
       <div style={{ overflow: "auto", position: "relative" }}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non euismod
+        {
+          /**
+           * Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non euismod
         nisl. Suspendisse ullamcorper, risus ac congue auctor, nunc eros
         tincidunt ligula, nec dignissim magna tortor at urna. Fusce pulvinar,
         leo blandit pretium volutpat, tortor sapien consectetur erat, in blandit
@@ -58,6 +60,8 @@ export function OrbitManagerRoot(props: IProps) {
         ligula. Donec convallis ex pellentesque ex hendrerit, in scelerisque sem
         rutrum. Donec vitae erat convallis, fringilla sapien ac, tincidunt
         velit. In commodo felis ac ultricies elementum. Duis at tellus sem.
+           */
+        }
       </div>
     </Box>
   );

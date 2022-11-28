@@ -1,6 +1,6 @@
 import { SceneMode } from "cesium";
 import { Box, Button, Header, Text } from "grommet";
-import { Deploy, Sun, Cube, Globe } from "grommet-icons";
+import { Deploy, Sun, Cube, Globe,Language} from "grommet-icons";
 import React from "react";
 import { IViewerState } from "../../functions/cesium";
 import { IRootLayoutState } from "../RootLayout";
@@ -61,12 +61,12 @@ export function ControlBar(props: IProps) {
         <div>
           <Button
             style={{ padding: 5 }}
-            icon={<Globe />}
+            icon={props.viewerState.inertial?<Language />:<Globe />}
             primary
             onClick={() => {
               props.updateViewerState({
                 ...props.viewerState,
-                ...{ inertial:  !props.viewerState},
+                ...{ inertial:  !props.viewerState.inertial},
               });
             }}
           />

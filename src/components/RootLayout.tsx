@@ -69,7 +69,7 @@ class RootLayout extends React.Component<IProps, IRootLayoutState> {
         }
         />
         <OrbitDisplayRoot {...this.state} />
-        <OrbitManagerRoot />
+       {/** <OrbitManagerRoot /> */}
       </Box>
     );
   }
