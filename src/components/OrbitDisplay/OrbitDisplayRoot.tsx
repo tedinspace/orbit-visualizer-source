@@ -1,13 +1,11 @@
-import { Viewer } from "cesium";
+import { SceneMode } from "cesium";
 import { Box } from "grommet";
 import React from "react";
 import ReactResizeDetector from "react-resize-detector";
-import {  IRootLayoutState } from "../RootLayout";
+import { defaultViewerConstruct, updateViewer } from "../../functions/cesium";
+import { IRootLayoutState } from "../RootLayout";
 
-
-export interface IOrbitDisplayRootProps extends IRootLayoutState{
-
-}
+export interface IOrbitDisplayRootProps extends IRootLayoutState {}
 interface IState {
   viewerLoaded: boolean;
 }
@@ -22,18 +20,21 @@ class OrbitDisplayRoot extends React.Component<IOrbitDisplayRootProps, IState> {
     };
   }
   componentDidMount() {
-    this.viewer = new Viewer(this.cesiumContainer, {
-      homeButton: false,
-      baseLayerPicker: false,
-      sceneModePicker: false,
-      navigationHelpButton: false,
-      geocoder: false,
-    });
-    this.viewer.animation.container.style.visibility = "hidden";
-    this.viewer.timeline.container.style.visibility = "hidden";
-
-    this.viewer.forceResize();
+    this.viewer = defaultViewerConstruct(this.cesiumContainer, this.props.viewerState) 
+    //this.viewer.scene.mode = SceneMode.SCENE2D
     this.setState({ viewerLoaded: true });
+  }
+
+  componentDidUpdate(prevProps: Readonly<IOrbitDisplayRootProps>, prevState: Readonly<IState>, snapshot?: any): void {
+    if(this.props.rebuildViewerHash!==prevProps.rebuildViewerHash){
+      console.log(this.viewer)
+      updateViewer(this.viewer,this.props.viewerState)
+      //this.viewer.scene.requestRender();
+      //this.viewer.forceResize();
+      
+      //alert("!")
+    }
+    
   }
 
   componentWillUnmount() {

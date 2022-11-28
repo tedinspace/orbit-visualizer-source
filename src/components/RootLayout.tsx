@@ -1,6 +1,8 @@
+import { SceneMode } from "cesium";
 import { Box } from "grommet";
 import React from "react";
 import { hash, tle2satrec } from "../functions";
+import { IViewerState } from "../functions/cesium";
 import { ControlBar } from "./ControlBar/ControlBar";
 import OrbitDisplayRoot from "./OrbitDisplay/OrbitDisplayRoot";
 import { OrbitManagerRoot } from "./OrbitManager/OrbitManagerRoot";
@@ -15,12 +17,22 @@ export interface IOrbitState {
 interface IProps {}
 export interface IRootLayoutState {
   rebuildOrbitsHash: string;
+  viewerState:IViewerState;
   states: { [key: string]: IOrbitState };
+  rebuildViewerHash:string;
+
+
 }
 class RootLayout extends React.Component<IProps, IRootLayoutState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
+      rebuildViewerHash: hash(),
+      viewerState:{
+        inertial:true,
+        mode: SceneMode.SCENE3D,
+        shadows: true
+      },
       rebuildOrbitsHash: hash(),
       states: {
         k0: {
@@ -46,7 +58,16 @@ class RootLayout extends React.Component<IProps, IRootLayoutState> {
   render() {
     return (
       <Box fill>
-        <ControlBar />
+        <ControlBar {...this.state} 
+        updateViewerState={
+          (vs:IViewerState)=>{
+            this.setState({
+              viewerState:vs,
+              rebuildViewerHash:hash()
+            })
+          }
+        }
+        />
         <OrbitDisplayRoot {...this.state} />
         <OrbitManagerRoot />
       </Box>
