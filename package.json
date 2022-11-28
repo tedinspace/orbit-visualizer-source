@@ -20,7 +20,7 @@
     "react-resize-detector": "^7.1.2",
     "react-scripts": "5.0.1",
     "resium": "^1.15.1",
-    "satellite": "^0.0.2",
+    "satellite.js": "^4.1.4",
     "styled-components": "^5.3.6",
     "typescript": "^4.9.3",
     "web-vitals": "^2.1.4"

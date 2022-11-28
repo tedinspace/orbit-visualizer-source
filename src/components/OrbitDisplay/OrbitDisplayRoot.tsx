@@ -2,16 +2,19 @@ import { Viewer } from "cesium";
 import { Box } from "grommet";
 import React from "react";
 import ReactResizeDetector from "react-resize-detector";
+import {  IRootLayoutState } from "../RootLayout";
 
-interface IProps {}
+export interface IOrbitDisplayRootProps extends IRootLayoutState{
+
+}
 interface IState {
   viewerLoaded: boolean;
 }
-class OrbitDisplayRoot extends React.Component<IProps, IState> {
+class OrbitDisplayRoot extends React.Component<IOrbitDisplayRootProps, IState> {
   viewer: any;
   cesiumContainer: any;
 
-  constructor(props: IProps) {
+  constructor(props: IOrbitDisplayRootProps) {
     super(props);
     this.state = {
       viewerLoaded: false,
