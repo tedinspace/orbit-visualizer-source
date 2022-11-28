@@ -1,12 +1,13 @@
 import { SceneMode } from "cesium";
-import { Box, Button, Header, Text } from "grommet";
+import { Box, Button, Header, Text, Tip } from "grommet";
 import { Deploy, Sun, Cube, Globe,Language} from "grommet-icons";
 import React from "react";
 import { IViewerState } from "../../functions/cesium";
-import { IRootLayoutState } from "../RootLayout";
+import { IOrbitSettingsState, IRootLayoutState } from "../RootLayout";
 
 interface IProps extends IRootLayoutState {
   updateViewerState(state: IViewerState): void;
+  updateOrbitSettingsState(state: IOrbitSettingsState): void;
 }
 export function ControlBar(props: IProps) {
   return (
@@ -59,17 +60,22 @@ export function ControlBar(props: IProps) {
           />
         </div>
         <div>
+          <Tip content={
+            props.orbitSettingsState.inertial?
+            "inertial (ECI)": "fixed (ECEF)"
+          }>
           <Button
             style={{ padding: 5 }}
-            icon={props.viewerState.inertial?<Language />:<Globe />}
+            icon={props.orbitSettingsState.inertial?<Language />:<Globe />}
             primary
             onClick={() => {
-              props.updateViewerState({
-                ...props.viewerState,
-                ...{ inertial:  !props.viewerState.inertial},
+              props.updateOrbitSettingsState({
+                ...props.orbitSettingsState,
+                ...{ inertial:  !props.orbitSettingsState.inertial},
               });
             }}
           />
+          </Tip>
         </div>
       </Box>
     </Header>

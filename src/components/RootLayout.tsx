@@ -14,24 +14,31 @@ export interface IOrbitState {
   isValid: boolean;
 }
 
+export interface IOrbitSettingsState{
+  inertial:boolean;
+}
+
 interface IProps {}
 export interface IRootLayoutState {
   rebuildOrbitsHash: string;
-  viewerState:IViewerState;
+  viewerState: IViewerState;
   states: { [key: string]: IOrbitState };
-  rebuildViewerHash:string;
-
-
+  rebuildViewerHash: string;
+  orbitSettingsState:IOrbitSettingsState;
+  orbitSettingsHash:string
 }
 class RootLayout extends React.Component<IProps, IRootLayoutState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
       rebuildViewerHash: hash(),
-      viewerState:{
-        inertial:true,
+      viewerState: {
         mode: SceneMode.SCENE3D,
-        shadows: true
+        shadows: true,
+      },
+      orbitSettingsHash: hash(),
+      orbitSettingsState:{
+        inertial:true
       },
       rebuildOrbitsHash: hash(),
       states: {
@@ -58,18 +65,23 @@ class RootLayout extends React.Component<IProps, IRootLayoutState> {
   render() {
     return (
       <Box fill>
-        <ControlBar {...this.state} 
-        updateViewerState={
-          (vs:IViewerState)=>{
+        <ControlBar
+          {...this.state}
+          updateViewerState={(vs: IViewerState) => {
             this.setState({
-              viewerState:vs,
-              rebuildViewerHash:hash()
-            })
-          }
-        }
+              viewerState: vs,
+              rebuildViewerHash: hash(),
+            });
+          }}
+          updateOrbitSettingsState={(oss: IOrbitSettingsState) => {
+            this.setState({
+              orbitSettingsState: oss,
+              orbitSettingsHash: hash(),
+            });
+          }}
         />
         <OrbitDisplayRoot {...this.state} />
-       {/** <OrbitManagerRoot /> */}
+        {/** <OrbitManagerRoot /> */}
       </Box>
     );
   }

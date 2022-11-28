@@ -2,7 +2,6 @@ import { SceneMode, Viewer } from "cesium";
 export interface IViewerState {
   mode: SceneMode.COLUMBUS_VIEW | SceneMode.SCENE2D | SceneMode.SCENE3D;
   shadows: boolean;
-  inertial: boolean;
 }
 
 export function updateViewer(viewer: any, viewerState: IViewerState) {

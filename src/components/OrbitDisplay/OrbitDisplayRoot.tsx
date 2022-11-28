@@ -1,8 +1,11 @@
-import { Cartesian3, defined, Matrix3, Matrix4, SceneMode, Transforms } from "cesium";
 import { Box } from "grommet";
 import React from "react";
 import ReactResizeDetector from "react-resize-detector";
-import { defaultViewerConstruct, icrf, updateViewer } from "../../functions/cesium";
+import {
+  defaultViewerConstruct,
+  icrf,
+  updateViewer,
+} from "../../functions/cesium";
 import { IRootLayoutState } from "../RootLayout";
 
 export interface IOrbitDisplayRootProps extends IRootLayoutState {}
@@ -18,31 +21,30 @@ class OrbitDisplayRoot extends React.Component<IOrbitDisplayRootProps, IState> {
     this.state = {
       viewerLoaded: false,
     };
-
   }
-   
-
 
   componentDidMount() {
-    this.viewer = defaultViewerConstruct(this.cesiumContainer, this.props.viewerState) 
-    //this.viewer.scene.mode = SceneMode.SCENE2D
+    this.viewer = defaultViewerConstruct(
+      this.cesiumContainer,
+      this.props.viewerState
+    );
     this.setState({ viewerLoaded: true });
-    this.viewer.clock.onTick.addEventListener(()=>{
-      icrf(this.viewer, this.props.viewerState.inertial)
+    this.viewer.clock.onTick.addEventListener(() => {
+      icrf(this.viewer, this.props.orbitSettingsState.inertial);
     });
+    this.viewer.clock.shouldAnimate = true;
 
+    
   }
 
-  componentDidUpdate(prevProps: Readonly<IOrbitDisplayRootProps>, prevState: Readonly<IState>, snapshot?: any): void {
-    if(this.props.rebuildViewerHash!==prevProps.rebuildViewerHash){
-      console.log(this.viewer)
-      updateViewer(this.viewer,this.props.viewerState)
-      //this.viewer.scene.requestRender();
-      //this.viewer.forceResize();
-      
-      //alert("!")
+  componentDidUpdate(
+    prevProps: Readonly<IOrbitDisplayRootProps>,
+    prevState: Readonly<IState>,
+    snapshot?: any
+  ): void {
+    if (this.props.rebuildViewerHash !== prevProps.rebuildViewerHash) {
+      updateViewer(this.viewer, this.props.viewerState);
     }
-    
   }
 
   componentWillUnmount() {
