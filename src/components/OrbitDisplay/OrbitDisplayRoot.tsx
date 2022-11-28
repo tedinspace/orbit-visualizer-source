@@ -4,6 +4,7 @@ import React from "react";
 import ReactResizeDetector from "react-resize-detector";
 import {  IRootLayoutState } from "../RootLayout";
 
+
 export interface IOrbitDisplayRootProps extends IRootLayoutState{
 
 }
